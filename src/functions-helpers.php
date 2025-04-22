@@ -17,10 +17,10 @@
  * @link      https://github.com/backdrop-dev/attr
  */
 
-namespace Hybrid\Attr;
+namespace Backdrop\Attr;
 
-use Hybrid\App;
-use Hybrid\Attr\Contracts\Attributes;
+use Backdrop\App;
+use Backdrop\Attr\Contracts\Attributes;
 
 if ( ! function_exists( __NAMESPACE__ . '\\attr' ) ) {
     /**
@@ -30,7 +30,7 @@ if ( ! function_exists( __NAMESPACE__ . '\\attr' ) ) {
      * @param  string $name
      * @param  string $context
      * @param  array  $attr
-     * @return \Hybrid\Attr\Contracts\Attributes
+     * @return \Backdrop\Attr\Contracts\Attributes
      *
      * @access public
      */
