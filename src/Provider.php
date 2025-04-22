@@ -36,7 +36,7 @@ class Provider extends ServiceProvider {
      *
      * @access public
      */
-    public function register() {
+    public function register(): void {
         $this->app->bind( Attributes::class, Attr::class );
     }
 
