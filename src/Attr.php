@@ -116,7 +116,7 @@ class Attr implements Attributes {
      *
      * @access public
      */
-    public function display() {
+    public function display(): void {
         echo $this->render();
     }
 
