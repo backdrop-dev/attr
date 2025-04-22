@@ -14,9 +14,9 @@
  * @link      https://github.com/backdrop-dev/attr
  */
 
-namespace Hybrid\Attr;
+namespace Backdrop\Attr;
 
-use Hybrid\Attr\Contracts\Attributes;
+use Backdrop\Attr\Contracts\Attributes;
 
 /**
  * Attributes class.
