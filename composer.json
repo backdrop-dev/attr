@@ -1,7 +1,10 @@
 {
     "name": "backdrop-dev/attr",
     "description": "Backdrop Attr provides devs a system for adding filterable attributes. This is sort of like `body_class()`, `post_class()`, and `comment_class()` on steroids.",
-    "keywords": [ "classicpress","wordpress" ],
+    "keywords": [
+        "classicpress",
+        "wordpress"
+    ],
     "homepage": "https://github.com/backdrop-dev/attr",
     "license": "GPL-2.0-or-later",
     "authors": [
@@ -14,13 +17,14 @@
     ],
     "autoload": {
         "psr-4": {
-          "Backdrop\\Attr\\": "src/"
-		},
-		"files": [
+            "Backdrop\\Attr\\": "src/"
+        },
+        "files": [
             "src/functions-helpers.php"
-		]
+        ]
     },
     "require": {
-        "php": ">=7.1"
+        "php": ">=7.4",
+        "backdrop-dev/framework": "^2.0"
     }
 }

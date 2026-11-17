@@ -9,7 +9,7 @@
  *
  * @package   Backdrop
  * @author    Benjamin Lu <benlumia007@gmail.com>
- * @copyright 2019. Benjamin Lu
+ * @copyright 2019-2026 Benjamin Lu
  * @license   https://www.gnu.org/licenses/gpl-2.0.html
  * @link      https://github.com/backdrop-dev/attr
  */
@@ -191,7 +191,7 @@ class Attr implements Attributes {
      * Filters and returns the array of attributes.
      *
      * @since  1.0.0
-     * @return void
+     * @return array
      *
      * @access protected
      */
@@ -227,21 +227,21 @@ class Attr implements Attributes {
         }
 
         // Filter the default attributes.
-        $defaults = apply_filters( "hybrid/attr/{$this->name}/defaults", $defaults, $this->context, $this );
+        $defaults = apply_filters( "backdrop/attr/{$this->name}/defaults", $defaults, $this->context, $this );
 
         // Merge the attributes with the defaults.
         $this->attr = wp_parse_args( $this->input, $defaults );
 
         // Apply filters to the parsed attributes.
-        $this->attr = apply_filters( 'hybrid/attr', $this->attr, $this->name, $this->context );
-        $this->attr = apply_filters( "hybrid/attr/{$this->name}", $this->attr, $this->context );
+        $this->attr = apply_filters( 'backdrop/attr', $this->attr, $this->name, $this->context );
+        $this->attr = apply_filters( "backdrop/attr/{$this->name}", $this->attr, $this->context );
 
         // Provide a filter hook for the class attribute directly. The
         // classes are split up into an array for easier filtering. Note
         // that theme authors should still utilize the core WP body,
         // post, and comment class filter hooks. This should only be
         // used for custom attributes.
-        $hook = "hybrid/attr/{$this->name}/class";
+        $hook = "backdrop/attr/{$this->name}/class";
 
         if ( isset( $this->attr['class'] ) && has_filter( $hook ) ) {
 
