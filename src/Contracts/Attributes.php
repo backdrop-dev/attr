@@ -8,7 +8,7 @@
  *
  * @package   Backdrop
  * @author    Benjamin Lu <benlumia007@gmail.com>
- * @copyright 2019. Benjamin Lu
+ * @copyright 2019-2026 Benjamin Lu
  * @license   https://www.gnu.org/licenses/gpl-2.0.html
  * @link      https://github.com/backdrop-dev/attr
  */
@@ -36,14 +36,14 @@ interface Attributes extends Renderable, Displayable {
      *
      * @access public
      */
-    public function all();
+    public function all(): array;
 
     /**
      * Returns a single, unescaped attribute's value.
      *
      * @since  1.0.0
      * @param  string $name
-     * @return string
+     * @return mixed
      *
      * @access public
      */
@@ -59,6 +59,6 @@ interface Attributes extends Renderable, Displayable {
      *
      * @access public
      */
-    public function with( $key, $value = null );
+    public function with( $name, $value = null );
 
 }
