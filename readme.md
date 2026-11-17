@@ -28,12 +28,19 @@ $app->provider( \Backdrop\Attr\Provider::class );
 * `render( $name, $context = '', $attr = [] )` returns them as a string.
 * `attr( $name, $context = '', $attr = [] )` returns the object, which supports `get( 'id' )` and `with( 'post', $post_id )`.
 
+Attribute values: a string or number is escaped and output, `true` outputs a bare attribute such as `hidden`, and `false` or `null` leaves the attribute out.
+
 Without a custom class, the class is `{name} {name}--{context}`, for example `sidebar sidebar--primary`. The names `html`, `body`, `post`, `entry` and `comment` use the matching WordPress attributes and classes.
 
 ## Filters
 * `backdrop/attr/{name}/defaults` filters the defaults before your input is merged in.
 * `backdrop/attr` and `backdrop/attr/{name}` filter the final array of attributes.
 * `backdrop/attr/{name}/class` filters the classes as an array.
+
+## Tests
+```
+php tests/run.php
+```
 
 ## License
 GPL-2.0-or-later

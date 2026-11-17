@@ -28,6 +28,16 @@ use Backdrop\Attr\Contracts\Attributes;
 class Attr implements Attributes {
 
     /**
+     * Elements that have built-in default attributes.
+     *
+     * @since  1.0.0
+     * @var    array
+     *
+     * @access protected
+     */
+    protected const CORE = [ 'html', 'body', 'post', 'entry', 'comment' ];
+
+    /**
      * The name/ID of the element (e.g., `sidebar`).
      *
      * @since  1.0.0
@@ -81,14 +91,14 @@ class Attr implements Attributes {
      * Outputs an HTML element's attributes.
      *
      * @since  1.0.0
-     * @param  string $slug
+     * @param  string $name
      * @param  string $context
      * @param  array  $attr
      * @return void
      *
      * @access public
      */
-    public function __construct( $name, $context = '', array $attr = [] ) {
+    public function __construct( string $name, string $context = '', array $attr = [] ) {
 
         $this->name    = $name;
         $this->context = $context;
@@ -104,7 +114,7 @@ class Attr implements Attributes {
      *
      * @access public
      */
-    public function __toString() {
+    public function __toString(): string {
         return $this->render();
     }
 
@@ -134,17 +144,21 @@ class Attr implements Attributes {
 
         foreach ( $this->all() as $name => $value ) {
 
-            $esc_value = '';
-
-            // If the value is a link `href`, use `esc_url()`.
-            if ( $value !== false && 'href' === $name ) {
-                $esc_value = esc_url( $value );
-
-            } elseif ( $value !== false ) {
-                $esc_value = esc_attr( $value );
+            // `false` and `null` leave the attribute out entirely.
+            if ( false === $value || null === $value ) {
+                continue;
             }
 
-            $html .= false !== $value ? sprintf( ' %s="%s"', esc_html( $name ), $esc_value ) : esc_html( " {$name}" );
+            // `true` outputs a bare (boolean) attribute, such as `hidden`.
+            if ( true === $value ) {
+                $html .= ' ' . esc_html( $name );
+                continue;
+            }
+
+            // If the value is a link `href`, use `esc_url()`.
+            $esc_value = 'href' === $name ? esc_url( $value ) : esc_attr( $value );
+
+            $html .= sprintf( ' %s="%s"', esc_html( $name ), $esc_value );
         }
 
         return trim( $html );
@@ -168,6 +182,9 @@ class Attr implements Attributes {
             $this->data[ $name ] = $value;
         }
 
+        // Attributes are built from the data, so rebuild them on the next call.
+        $this->attr = [];
+
         return $this;
     }
 
@@ -176,7 +193,7 @@ class Attr implements Attributes {
      *
      * @since  1.0.0
      * @param  string $name
-     * @return string
+     * @return mixed
      *
      * @access public
      */
@@ -195,7 +212,7 @@ class Attr implements Attributes {
      *
      * @access protected
      */
-    public function all() {
+    public function all(): array {
 
         // If we already have attributes, let's return them and bail.
         if ( $this->attr ) {
@@ -220,8 +237,9 @@ class Attr implements Attributes {
             $defaults['class'] = $this->context ? "{$this->name} {$this->name}--{$this->context}" : $this->name;
         }
 
-        // Compatibility with core WP attributes.
-        if ( method_exists( $this, $this->name ) ) {
+        // Compatibility with core WP attributes. Only the known elements are
+        // handled here so that a name like `render` can't call a public method.
+        if ( in_array( $this->name, self::CORE, true ) ) {
             $method   = $this->name;
             $defaults = $this->$method( $defaults );
         }
